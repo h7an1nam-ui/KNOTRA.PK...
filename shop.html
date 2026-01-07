@@ -161,7 +161,7 @@
             products.forEach(p => {
                 const html = `
                     <div class="card">
-                        <img src="${p.img}" alt="${p.name}" onclick="location.href='products.html?id=${p.id}'">
+                        <img src="${p.img}" alt="${p.name}" loading="lazy" onclick="location.href='products.html?id=${p.id}'">
                         <div class="info">
                             <div>
                                 <h3 class="font-head">${p.name}</h3>
@@ -247,4 +247,5 @@
         updateUI();
     </script>
 </body>
+
 </html>
