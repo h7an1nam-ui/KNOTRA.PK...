@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | KNOTRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --red: #D93025; --bone: #F9F7F2; --black: #111; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background: var(--bone); font-family: 'Poppins', sans-serif; color: var(--black); }
+        .font-head { font-family: 'Anton', sans-serif; text-transform: uppercase; }
+        nav { padding: 1.5rem 3rem; display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; background: var(--bone); }
+        .logo { font-size: 1.8rem; color: var(--red); text-decoration: none; }
+        .product-container { max-width: 1100px; margin: 4rem auto; padding: 0 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        .product-img img { width: 100%; border: 1px solid #ddd; background: white; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .product-details h1 { font-size: 3.5rem; line-height: 1; margin-bottom: 1rem; }
+        .price-tag { font-size: 2rem; color: var(--red); font-family: 'Anton'; display: block; margin-bottom: 1.5rem; }
+        .desc { line-height: 1.8; color: #444; margin-bottom: 2.5rem; font-size: 1.1rem; }
+        .add-btn { padding: 1.5rem; width: 100%; background: var(--black); color: white; border: none; font-family: 'Anton'; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .add-btn:hover { background: var(--red); }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #888; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) { 
+            .product-container { grid-template-columns: 1fr; gap: 2rem; }
+            .product-details h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo font-head">KNOTRA.PK</a>
+        <a href="shop.html" class="font-head" style="text-decoration:none; color:black; font-size:0.9rem;">Back to Shop</a>
+    </nav>
+
+    <div class="product-container" id="details-view">
+        <!-- Content will be loaded by JavaScript -->
+    </div>
+
+    <script>
+        // FULL DATABASE - MATCHED EXACTLY TO SHOP.HTML IDs
+        const products = {
+            'tofee': { name: 'Sweet Toffee', price: 150, img: 'tofee.jpg', desc: 'A nostalgic handmade crochet treat for your keys. Soft, colorful, and perfectly stitched.' },
+            'minibows': { name: 'Mini Coquette Bows', price: 250, img: 'mini bow.jpg', desc: 'Dainty handmade bows that add a soft, aesthetic touch to any bag or accessory.' },
+            'daisy': { name: 'Summer Daisy', price: 225, img: 'daisy.jpg', desc: 'A fresh, everlasting white daisy with a bright yellow center. Bring summer vibes everywhere.' },
+            'mug': { name: 'Coffee Mug', price: 325, img: 'Coffee Mug.jpg', desc: 'The perfect charm for caffeine lovers. Features a tiny detailed handle and "coffee" inside.' },
+            'heart': { name: 'Mini Heart', price: 120, img: 'mini heart.jpg', desc: 'A small token of love. Hand-stuffed and stitched with care.' },
+            'octopus': { name: 'Squishy Octopus', price: 225, img: 'octopus.jpg', desc: 'An adorable multi-legged friend. Soft, squishy, and features cute safety eyes.' },
+            'bee': { name: 'Bumble Bee', price: 225, img: 'bee.jpg', desc: 'Buzzing with cuteness! Our best-selling yellow and black striped companion.' },
+            'candy': { name: 'Swirl Candy', price: 150, img: 'Candy.jpg', desc: 'Colorful crochet candy that looks sweet enough to eat.' },
+            'star': { name: 'Wish Star', price: 150, img: 'star.jpg', desc: 'A bright, stuffed star to guide your keys through the dark.' },
+            'strawberry': { name: 'Strawberry', price: 250, img: 'strawberry.jpg', desc: 'A juicy-looking berry with tiny seed details and a green leafy top.' },
+            'lavender': { name: 'Lavender Sprig', price: 300, img: 'lavender.jpg', desc: 'Calming purple blooms that never wilt. A sophisticated touch for your collection.' },
+            'lilycharm': { name: 'Lily Bag Charm', price: 250, img: 'lily.jpg', desc: 'An elegant white lily flower designed specifically for bag handles.' },
+            'sunflower': { name: 'Sunflower', price: 450, img: 'sunflower keychain.jpg', desc: 'A large, vibrant bloom to bring sunshine to your daily routine.' },
+            'butterfly': { name: 'Butterfly', price: 200, img: 'butterfly.jpg', desc: 'Delicate wings and tiny antennae. A masterpiece of miniature crochet.' },
+            'cherry': { name: 'Pair of Cherries', price: 250, img: 'cherry.jpg', desc: 'A classic duo. Two bright red cherries on a single green stem.' },
+            'lemon': { name: 'Lemon Slice', price: 175, img: 'lemon.jpg', desc: 'Zesty and bright. A detailed slice of citrus to refresh your look.' },
+            'watermelon': { name: 'Watermelon Slice', price: 175, img: 'watermelon.jpg', desc: 'A slice of summer! Features pink center and green rind stitching.' },
+            'dragonfruit': { name: 'Dragon Fruit', price: 175, img: 'dragon fruit.jpg', desc: 'Exotic and detailed. Captures the unique look of the dragon fruit interior.' },
+            'flower': { name: 'Bloom Charm', price: 375, img: 'flower keychain.jpg', desc: 'A lush, multi-layered flower that makes a bold statement.' },
+            'smoke': { name: 'The Lit Stitch', price: 300, img: 'smoke.jpg', desc: 'Our edgy signature piece. Features a realistic "burning" tip.' },
+            'spider': { name: 'Spider Web', price: 250, img: 'spider.jpg', desc: 'Perfect for the gothic aesthetic. A cute, soft-legged friend.' },
+            'evileye': { name: 'Evil Eye Charm', price: 250, img: 'evileye.jpg', desc: 'Traditional protection meets modern craft. Hand-stitched concentric circles.' },
+            'duck': { name: 'Dapper Duck', price: 250, img: 'duck.jpg', desc: 'A tiny yellow duckling with an orange beak. Irresistibly cute.' },
+            'miniflower': { name: 'Little Flower', price: 150, img: 'miniflower.jpg', desc: 'A simple, petite bloom for subtle accessorizing.' },
+            'owl': { name: 'Wise Owl', price: 300, img: 'owl.jpg', desc: 'Features large eyes and detailed wing stitching. A wise choice for your bag.' },
+            'beermug': { name: 'Beer Mug', price: 350, img: 'beer.jpg', desc: 'A fun beer mug with frothy foam spilling over the side.' },
+            'lilybouqet': { name: 'Lily Bouquet', price: 2000, img: 'lilybouquet.jpg', desc: 'A grand arrangement of hand-stitched lilies. The ultimate everlasting gift.' },
+            'rose': { name: 'Everlasting Rose', price: 2500, img: 'rose.jpg', desc: 'A single-stem rose in deep romantic red. Meticulously crafted petals.' },
+            'minibouquet': { name: 'Mini Blossom Bouquet', price: 750, img: 'bouquet.jpg', desc: 'A charming bundle of mini blooms. Perfect for desks or dashboards.' },
+            'gajre': { name: 'Jasmine Gajre (Pair)', price: 1250, img: 'gajre.jpg', desc: 'Traditional jasmine garlands for the wrist. Soft, durable, and white forever.' },
+            'longstrap': { name: 'Long Strap Crossbody', price: 1250, img: 'longstrap.jpg', desc: 'Hand-woven crossbody bag. Durable enough for daily use, stylish enough for events.' },
+            'burger': { name: 'Burger Pouch', price: 750, img: 'burger.jpg', desc: 'A burger-shaped drawstring bag. Layers of lettuce, cheese, and patty.' },
+            'granny': { name: 'Granny Square Purse', price: 650, img: 'bluepurse.jpg', desc: 'A classic vintage-style purse with modern durability.' }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const pId = urlParams.get('id');
+        const p = products[pId];
+
+        const container = document.getElementById('details-view');
+
+        if (p) {
+            container.innerHTML = `
+                <div class="product-img">
+                    <img src="${p.img}" alt="${p.name}">
+                </div>
+                <div class="product-details">
+                    <a href="shop.html" class="back-link">← Back to Archive</a>
+                    <h1 class="font-head">${p.name}</h1>
+                    <span class="price-tag">PKR ${p.price}</span>
+                    <p class="desc">${p.desc}</p>
+                    <button class="add-btn" onclick="addToCartFromPage('${p.name}', ${p.price})">ADD TO CART</button>
+                    <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #888;">* All items are 100% handmade and may vary slightly from the picture.</p>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 5rem;">
+                <h1 class="font-head">Product Not Found</h1>
+                <p>The product you are looking for has been moved or archived.</p>
+                <a href="shop.html" class="add-btn" style="display:inline-block; margin-top:20px; text-decoration:none;">Back to Shop</a>
+            </div>`;
+        }
+
+        function addToCartFromPage(name, price) {
+            let cart = JSON.parse(localStorage.getItem('knotraCart')) || [];
+            const existing = cart.find(i => i.name === name);
+            if (existing) existing.quantity++;
+            else cart.push({ name, price, quantity: 1 });
+            localStorage.setItem('knotraCart', JSON.stringify(cart));
+            alert(name + " added to bag!");
+        }
+    </script>
+</body>
+</html>
