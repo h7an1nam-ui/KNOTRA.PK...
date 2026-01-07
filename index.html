@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNOTRA.PK | Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+    <style>
+        /* CORE STYLES */
+        :root { --red: #D93025; --black: #111; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            color: var(--black); 
+            background-color: var(--black);
+            overflow: hidden; 
+        }
+        
+        a { text-decoration: none; color: inherit; }
+        
+        /* FONTS */
+        .font-head { font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        .font-serif { font-family: 'Playfair Display', serif; font-style: italic; }
+
+        /* LOADER */
+        #loader {
+            position: fixed; top:0; left:0; width:100%; height:100%; background: var(--red);
+            z-index: 9999; display: flex; justify-content: center; align-items: center;
+            color: white; font-size: 3rem; font-family: 'Anton';
+            animation: slideUp 1s ease-in-out 2s forwards;
+        }
+        @keyframes slideUp { to { transform: translateY(-100%); } }
+
+        /* NAV */
+        nav { 
+            padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; 
+            position: fixed; width: 100%; z-index: 100; 
+            background: transparent;
+            transition: 0.3s;
+        }
+        nav::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+            z-index: -1;
+        }
+
+        .logo { font-size: 1.8rem; color: white; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
+        .menu a { margin-left: 20px; font-weight: 600; text-transform: uppercase; font-size: 0.9rem; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .menu a:hover { color: var(--red); }
+
+        /* SCROLL CONTAINER */
+        .scroll-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        /* SECTIONS */
+        section {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        /* DARK OVERLAY */
+        section::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.35); 
+            z-index: 1;
+        }
+
+        /* CONTENT WRAPPER */
+        .content-wrapper {
+            z-index: 2;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        /* --- ANIMATION STYLES --- */
+        
+        /* Initial state: hidden and pushed down */
+        .animate-up {
+            opacity: 0;
+            transform: translateY(60px); /* Start 60px lower */
+            transition: all 1s ease-out; /* Smooth transition */
+        }
+
+        /* Active state: visible and back to normal position */
+        .section-active .animate-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delays for elements appearing one after another */
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+
+        /* TYPOGRAPHY */
+        h1.huge-text { 
+            font-size: 8rem; 
+            line-height: 1; 
+            color: white; 
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.5); 
+            margin-bottom: 1rem;
+        }
+
+        p.sub-text { 
+            font-size: 1.5rem; 
+            color: #f0f0f0; 
+            margin-bottom: 2rem;
+        }
+
+        /* BUTTON */
+        .btn-explore {
+            display: inline-block; padding: 1.5rem 4rem; border: 2px solid white;
+            font-size: 1.5rem; font-family: 'Anton'; text-transform: uppercase;
+            transition: 0.3s; background: rgba(0,0,0,0.5); color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-explore:hover { background: var(--red); border-color: var(--red); }
+
+        /* --- BACKGROUND IMAGES (REPLACE THESE) --- */
+        #section-1 { background-image: url('bg.jpg'); } 
+        #section-2 { background-image: url('bg2.jpg'); } 
+        #section-3 { background-image: url('bg3.jpg'); } 
+        #section-4 { background-image: url('bg4.jpg'); } 
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            h1.huge-text { font-size: 3.5rem; }
+            .btn-explore { padding: 1rem 2rem; font-size: 1.2rem; }
+            nav { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">KNOTRA.PK</div>
+
+    <nav>
+        <a href="index.html" class="logo font-head">KNOTRA.PK</a>
+        <div class="menu font-head">
+            <a href="shop.html">Shop</a>
+            <a href="contact.html">Contact</a>
+            <a href="shop.html">Cart (<span id="cart-count">0</span>)</a>
+        </div>
+    </nav>
+
+    <div class="scroll-container">
+
+        <!-- SECTION 1 -->
+        <section id="section-1">
+            <div class="content-wrapper">
+                <h1 class="font-head huge-text animate-up">KNOTRA</h1>
+                <p class="font-serif sub-text animate-up delay-1">
+                    Vol. 01 — The Art of Patience.<br>
+                    Handmade luxury, stitched to perfection.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="section-2">
+            <div class="content-wrapper">
+                <h1 class="font-head huge-text animate-up">CROCHETED</h1>
+            </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="section-3">
+            <div class="content-wrapper">
+                <h1 class="font-head huge-text animate-up">CURATED</h1>
+            </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="section-4">
+            <div class="content-wrapper">
+                <h1 class="font-head huge-text animate-up">CLASSY</h1>
+                <div class="animate-up delay-1">
+                    <a href="shop.html" class="btn-explore">Enter The Archive</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // 1. CART LOGIC
+        let cart = JSON.parse(localStorage.getItem('knotraCart')) || [];
+        document.getElementById('cart-count').innerText = cart.length;
+
+        // 2. SCROLL ANIMATION OBSERVER
+        // This script watches which section is on screen and adds the class 'section-active'
+        const observerOptions = {
+            root: document.querySelector('.scroll-container'),
+            threshold: 0.5 // Trigger animation when 50% of section is visible
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-active');
+                } else {
+                    // Remove class to reset animation when scrolling away (optional)
+                    entry.target.classList.remove('section-active');
+                }
+            });
+        }, observerOptions);
+
+        // Start watching all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

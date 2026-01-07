@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNOTRA.PK | The Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --red: #D93025; --bone: #F9F7F2; --black: #111; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background: var(--bone); font-family: 'Poppins', sans-serif; color: var(--black); line-height: 1.6; }
+        .font-head { font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* NAVIGATION */
+        nav { padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; background: var(--bone); z-index: 100; }
+        .logo { font-size: 1.8rem; color: var(--red); text-decoration: none; }
+        .menu a { margin-left: 20px; font-weight: 600; text-decoration: none; color: var(--black); text-transform: uppercase; font-size: 0.85rem; }
+
+        /* HEADER */
+        .shop-header { padding: 5rem 5% 3rem; text-align: center; border-bottom: 1px solid #ddd; }
+        .shop-header h1 { font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 10px; }
+
+        /* CATEGORY SECTIONS */
+        .category-section { padding: 4rem 5%; }
+        .cat-title { font-size: 2.5rem; margin-bottom: 2.5rem; color: var(--red); border-left: 6px solid var(--black); padding-left: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2.5rem; }
+        
+        /* PRODUCT CARD */
+        .card { background: white; border: 1px solid #eee; transition: 0.3s; cursor: pointer; display: flex; flex-direction: column; overflow: hidden; }
+        .card:hover { transform: translateY(-8px); border-color: var(--red); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card img { width: 100%; height: 300px; object-fit: cover; background: #fafafa; }
+        .info { padding: 1.5rem; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .info h3 { font-size: 1.1rem; margin-bottom: 5px; text-transform: uppercase; }
+        .price { color: #4A6C4C; font-weight: bold; font-size: 1.1rem; display: block; margin-bottom: 15px; }
+        
+        .add-btn { width: 100%; padding: 12px; background: var(--black); color: white; border: none; cursor: pointer; font-family: 'Anton'; font-size: 1rem; transition: 0.3s; }
+        .add-btn:hover { background: var(--red); }
+
+        /* CUSTOM ORDER BANNER */
+        .custom-banner { background: var(--black); color: white; padding: 5rem 5%; text-align: center; margin: 2rem 0; }
+        .custom-btn { background: var(--red); color: white; padding: 1.2rem 3.5rem; border: none; font-family: 'Anton'; cursor: pointer; font-size: 1.3rem; margin-top: 1.5rem; transition: 0.3s; }
+        .custom-btn:hover { transform: scale(1.05); }
+
+        /* CART DRAWER */
+        .cart-drawer { position: fixed; top:0; right:-450px; width: 400px; height: 100vh; background: white; box-shadow: -10px 0 30px rgba(0,0,0,0.1); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 200; padding: 2.5rem; display: flex; flex-direction: column; }
+        .cart-drawer.open { right: 0; }
+        .cart-items { flex: 1; overflow-y: auto; margin: 1.5rem 0; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
+        
+        .qty-controls { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+        .qty-btn { background: #eee; border: none; width: 28px; height: 28px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .remove-link { color: var(--red); font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-top: 8px; display: inline-block; }
+        
+        .checkout-btn { background: #25D366; color: white; padding: 1.2rem; width: 100%; border: none; font-family: 'Anton'; font-size: 1.2rem; cursor: pointer; }
+
+        @media (max-width: 480px) {
+            .cart-drawer { width: 100%; right: -100%; }
+            nav { padding: 1rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo font-head">KNOTRA.PK</a>
+        <div class="menu font-head">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+            <a href="#" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</a>
+        </div>
+    </nav>
+
+    <div class="shop-header">
+        <h1 class="font-head">The Collection</h1>
+        <p>Curated. Crocheted. Classy.</p>
+    </div>
+
+    <!-- KEYRINGS & BAG CHARMS -->
+    <section class="category-section">
+        <h2 class="cat-title font-head">Key Rings & Bag Charms</h2>
+        <div class="grid" id="keyring-grid"></div>
+    </section>
+
+    <!-- FLOWERS & BOUQUETS -->
+    <section class="category-section">
+        <h2 class="cat-title font-head">Flowers & Bouquets</h2>
+        <div class="grid" id="flower-grid"></div>
+    </section>
+
+    <!-- BAGS -->
+    <section class="category-section">
+        <h2 class="cat-title font-head">Handmade Bags</h2>
+        <div class="grid" id="bag-grid"></div>
+    </section>
+
+    <!-- CUSTOM SECTION -->
+    <section class="custom-banner">
+        <h2 class="font-head" style="font-size: 3rem;">Custom Creations</h2>
+        <p style="font-size: 1.2rem; opacity: 0.8;">Have a specific vision? We bring your ideas to life.<br><strong>PKR 1000 advance required for custom bookings.</strong></p>
+        <button class="custom-btn" onclick="customOrder()">BOOK CUSTOM ORDER</button>
+    </section>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 class="font-head" style="font-size: 1.8rem;">Your Bag</h2>
+            <span style="cursor:pointer; font-size:2rem;" onclick="toggleCart()">×</span>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div style="border-top: 2px solid #eee; padding-top: 1.5rem;">
+            <h3 id="total" style="text-align:right; font-size: 1.5rem; margin-bottom: 1rem;">Total: PKR 0</h3>
+            <button class="checkout-btn" onclick="checkout()">PROCEED TO WHATSAPP</button>
+        </div>
+    </div>
+
+    <script>
+        // --- PRODUCT DATA ---
+        const products = [
+            // Keyrings
+            { id: 'tofee', cat: 'key', name: 'Sweet Toffee', price: 150, img: 'tofee.jpg' },
+            { id: 'minibows', cat: 'key', name: 'Mini Coquette Bows', price: 250, img: 'mini bow.jpg' },
+            { id: 'daisy', cat: 'key', name: 'Summer Daisy', price: 225, img: 'daisy.jpg' },
+            { id: 'mug', cat: 'key', name: 'Coffee Mug', price: 325, img: 'Coffee Mug.jpg' },
+            { id: 'heart', cat: 'key', name: 'Mini Heart', price: 120, img: 'mini heart.jpg' },
+            { id: 'octopus', cat: 'key', name: 'Squishy Octopus', price: 225, img: 'octopus.jpg' },
+            { id: 'bee', cat: 'key', name: 'Bumble Bee', price: 225, img: 'bee.jpg' },
+            { id: 'candy', cat: 'key', name: 'Swirl Candy', price: 150, img: 'Candy.jpg' },
+            { id: 'star', cat: 'key', name: 'Wish Star', price: 150, img: 'star.jpg' },
+            { id: 'strawberry', cat: 'key', name: 'Strawberry', price: 250, img: 'strawberry.jpg' },
+            { id: 'lavender', cat: 'key', name: 'Lavender Sprig', price: 300, img: 'lavender.jpg' },
+            { id: 'lilycharm', cat: 'key', name: 'Lily Bag Charm', price: 250, img: 'lily.jpg' },
+            { id: 'sunflower', cat: 'key', name: 'Sunflower', price: 450, img: 'sunflower keychain.jpg' },
+            { id: 'butterfly', cat: 'key', name: 'Butterfly', price: 200, img: 'butterfly.jpg' },
+            { id: 'cherry', cat: 'key', name: 'Pair of Cherries', price: 250, img: 'cherry.jpg' },
+            { id: 'lemon', cat: 'key', name: 'Lemon Slice', price: 175, img: 'lemon.jpg' },
+            { id: 'watermelon', cat: 'key', name: 'Watermelon Slice', price: 175, img: 'watermelon.jpg' },
+            { id: 'dragonfruit', cat: 'key', name: 'Dragon Fruit', price: 175, img: 'dragon fruit.jpg' },
+            { id: 'flower', cat: 'key', name: 'Bloom Charm', price: 375, img: 'flower keychain.jpg' },
+            { id: 'smoke', cat: 'key', name: 'The Lit Stitch', price: 300, img: 'smoke.jpg' },
+            { id: 'spider', cat: 'key', name: 'Spider Web', price: 250, img: 'spider.jpg' },
+            { id: 'evileye', cat: 'key', name: 'Evil Eye Charm', price: 250, img: 'evileye.jpg' },
+            { id: 'duck', cat: 'key', name: 'Dapper Duck', price: 250, img: 'duck.jpg' },
+            { id: 'miniflower', cat: 'key', name: 'Little Flower', price: 150, img: 'miniflower.jpg' },
+            { id: 'owl', cat: 'key', name: 'Wise Owl', price: 300, img: 'owl.jpg' },
+            { id: 'beermug', cat: 'key', name: 'Beer Mug', price: 350, img: 'beer.jpg' },
+            
+            // Flowers
+            { id: 'lilybouqet', cat: 'flower', name: 'Lily Bouquet', price: 2000, img: 'lilybouquet.jpg' },
+            { id: 'rose', cat: 'flower', name: 'Everlasting Rose', price: 2500, img: 'rose.jpg' },
+            { id: 'minibouquet', cat: 'flower', name: 'Mini Blossom Bouquet', price: 750, img: 'bouquet.jpg' },
+            { id: 'gajre', cat: 'flower', name: ' Gajre (Pair)', price: 1250, img: 'gajre.jpg' },
+
+            // Bags
+            { id: 'longstrap', cat: 'bag', name: 'Long Strap Crossbody', price: 1250, img: 'longstrap.jpg' },
+            { id: 'burger', cat: 'bag', name: 'Burger Pouch', price: 750, img: 'burger.jpg' },
+            { id: 'granny', cat: 'bag', name: 'Granny Square Purse', price: 650, img: 'bluepurse.jpg' }
+        ];
+
+        // --- RENDER PRODUCTS ---
+        function initShop() {
+            products.forEach(p => {
+                const html = `
+                    <div class="card">
+                        <img src="${p.img}" alt="${p.name}" onclick="location.href='products.html?id=${p.id}'">
+                        <div class="info">
+                            <div>
+                                <h3 class="font-head">${p.name}</h3>
+                                <span class="price">PKR ${p.price}</span>
+                            </div>
+                            <button class="add-btn" onclick="addToCart('${p.name}', ${p.price})">ADD TO CART</button>
+                        </div>
+                    </div>`;
+                
+                if(p.cat === 'key') document.getElementById('keyring-grid').innerHTML += html;
+                else if(p.cat === 'flower') document.getElementById('flower-grid').innerHTML += html;
+                else if(p.cat === 'bag') document.getElementById('bag-grid').innerHTML += html;
+            });
+        }
+
+        // --- CART LOGIC ---
+        let cart = JSON.parse(localStorage.getItem('knotraCart')) || [];
+
+        function toggleCart() { document.getElementById('cart-drawer').classList.toggle('open'); }
+
+        function saveCart() {
+            localStorage.setItem('knotraCart', JSON.stringify(cart));
+            updateUI();
+        }
+
+        function addToCart(name, price) {
+            const existing = cart.find(i => i.name === name);
+            if (existing) existing.quantity++;
+            else cart.push({ name, price, quantity: 1 });
+            saveCart();
+            document.getElementById('cart-drawer').classList.add('open');
+        }
+
+        function changeQty(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity < 1) cart.splice(index, 1);
+            saveCart();
+        }
+
+        function updateUI() {
+            const list = document.getElementById('cart-items');
+            let total = 0, count = 0;
+            list.innerHTML = '';
+
+            cart.forEach((item, i) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                count += item.quantity;
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <span class="font-head" style="display:block;">${item.name}</span>
+                            <span>PKR ${item.price}</span>
+                            <div class="qty-controls">
+                                <button class="qty-btn" onclick="changeQty(${i},-1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+                            </div>
+                            <span class="remove-link" onclick="changeQty(${i}, -${item.quantity})">Remove</span>
+                        </div>
+                        <div style="font-weight:bold;">PKR ${itemTotal}</div>
+                    </div>`;
+            });
+
+            document.getElementById('total').innerText = `Total: PKR ${total}`;
+            document.getElementById('cart-count').innerText = count;
+        }
+
+        function checkout() {
+            if (cart.length === 0) return alert("Cart is empty");
+            let msg = "Hello Knotra! I'd like to place an order:%0A%0A";
+            cart.forEach(i => msg += `• ${i.name} (x${i.quantity}) - PKR ${i.price * i.quantity}%0A`);
+            const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+            msg += `%0A*Grand Total: PKR ${total}*`;
+            window.open(`https://wa.me/923247623109?text=${msg}`, '_blank');
+        }
+
+        function customOrder() {
+            window.open("https://wa.me/923247623109?text=Hi! I want to discuss a Custom Order. I understand there is a PKR 1000 advance payment for custom work.", "_blank");
+        }
+
+        initShop();
+        updateUI();
+    </script>
+</body>
+</html>

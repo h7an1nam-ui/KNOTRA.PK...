@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNOTRA.PK | Contact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --red: #D93025; --bone: #F9F7F2; --black: #111; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background: var(--bone); font-family: 'Poppins', sans-serif; color: var(--black); }
+        .font-head { font-family: 'Anton', sans-serif; text-transform: uppercase; }
+
+        nav { padding: 1.5rem 3rem; display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; background: var(--bone); }
+        .logo { font-size: 1.8rem; color: var(--red); text-decoration: none; }
+        .menu a { margin-left: 20px; font-weight: 600; text-decoration: none; color: var(--black); text-transform: uppercase; font-size: 0.9rem; }
+
+        .container { max-width: 800px; margin: 4rem auto; padding: 0 2rem; }
+        
+        /* FAQ STYLE */
+        .faq-group { margin-bottom: 3rem; }
+        details { border-bottom: 1px solid #ccc; padding: 1rem 0; }
+        summary { font-family: 'Anton'; font-size: 1.4rem; cursor: pointer; display: flex; justify-content: space-between; }
+        summary:hover { color: var(--red); }
+        details p { margin-top: 10px; color: #555; line-height: 1.6; }
+
+        /* CONTACT BOX */
+        .contact-box { background: white; padding: 3rem; border: 2px solid var(--black); text-align: center; margin-top: 4rem; }
+        .contact-item { margin-bottom: 2rem; }
+        .contact-item h3 { color: var(--red); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .contact-item p { font-size: 1.2rem; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo font-head">KNOTRA.PK</a>
+        <div class="menu font-head">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="shop.html">Cart (<span id="cart-count">0</span>)</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="font-head" style="text-align:center; font-size:3.5rem; margin-bottom:3rem;">Questions & Answers</h1>
+        
+        <div class="faq-group">
+            <details open>
+                <summary>How long does delivery take?</summary>
+                <p>Our standard delivery time is 5-7 working days for in-stock items. Custom orders may take 10-14 days.</p>
+            </details>
+            <details>
+                <summary>Do you ship nationwide?</summary>
+                <p>Yes, we deliver to all cities in Pakistan via courier service.</p>
+            </details>
+            <details>
+                <summary>How do I place a custom order?</summary>
+                <p>Contact us on WhatsApp (0324-7623109) with your design reference. We require a 50% deposit for custom work.</p>
+            </details>
+            <details>
+                <summary>Can I wash the products?</summary>
+                <p>Hand wash gently with cold water. Do not wring. Lay flat to dry.</p>
+            </details>
+        </div>
+
+        <div class="contact-box">
+            <h2 class="font-head" style="font-size: 2.5rem; margin-bottom: 2rem;">Get In Touch</h2>
+            
+            <div class="contact-item">
+                <h3>Primary Order Line</h3>
+                <p>0324-7623109</p>
+            </div>
+            
+            <div class="contact-item">
+                <h3>Customer Support</h3>
+                <p>0333-8199844</p>
+            </div>
+
+            <div class="contact-item">
+                <h3>Email</h3>
+                <p>knotra.pk@gmail.com</p>
+            </div>
+
+            <div class="contact-item">
+                <h3>Location</h3>
+                <p>Pakistan</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load Cart Count only
+        let cart = JSON.parse(localStorage.getItem('knotraCart')) || [];
+        document.getElementById('cart-count').innerText = cart.length;
+    </script>
+</body>
+</html>
